@@ -1,5 +1,18 @@
 from pip.req import parse_requirements
 from setuptools import setup
+from setuptools.command.test import test as TestCommand
+
+class PyTest(TestCommand):
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
 
 def read_that_file(path):
     with open(path) as open_file:
@@ -17,7 +30,7 @@ setup(name='eisgate',
       author_email='kai@thinprintcloud.com',
       url='https://github.com/ezeep/eisgate',
       license='Proprietary License',
-      packages=['pydentity'],
+      packages=['eisgate'],
       include_package_data=True,
       zip_safe=True,
       tests_require=[str(req.req) for req
