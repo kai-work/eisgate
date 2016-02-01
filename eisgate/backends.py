@@ -35,7 +35,7 @@ class EisgateBackend(object):
             query = {uuid_attr: eis_uuid}
             user = UserModel.objects.get(**query)
         except UserModel.DoesNotExist:
-            attrs = {uuid_attr: eis_uuid, "username": eis_uuid}
+            attrs = {uuid_attr: eis_uuid}
             UserModel.objects.create(**attrs)
             user = UserModel.objects.get(**attrs)
             user.set_unusable_password()
