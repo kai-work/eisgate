@@ -35,7 +35,7 @@ class EisgateBackend(object):
             #query = {uuid_attr: user_uuid}
             #query = {"username": user_uuid}
             #user = UserModel.objects.get(**query)
-            user = UserModel.objects.get(username=user_uuid)
+            user = UserModel.objects.get(username=user_uuid[0:30])
         except UserModel.DoesNotExist:
             #attrs = {uuid_attr: eis_uuid}
             #UserModel.objects.create(**attrs)
