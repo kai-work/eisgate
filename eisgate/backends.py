@@ -11,11 +11,6 @@ class EisgateBackend(object):
     """
 
     """
-
-    def authenticate(self, request=None):
-        token = request.META.get('HTTP_AUTHORIZATION')
-        self.authenticate(token=token)
-
     def authenticate(self, provider=None, token=None):
         # We need to verify the token against EIS and get a identifier
         UserModel = get_user_model()
@@ -30,6 +25,9 @@ class EisgateBackend(object):
             return None
         data = response.json()
 
+        if not data['active']:
+            return None
+
         #We got a response with a uuid
         eis_uuid = data['sub']
 
@@ -37,9 +35,10 @@ class EisgateBackend(object):
             query = {uuid_attr: eis_uuid}
             user = UserModel.objects.get(**query)
         except UserModel.DoesNotExist:
-            attrs = {uuid_attr: eis_uuid}
+            attrs = {uuid_attr: eis_uuid, "username": eis_uuid}
             UserModel.objects.create(**attrs)
             user = UserModel.objects.get(**attrs)
+            user.set_unusable_password()
             user.save() #TODO, we might need user.user.save() with backend
         return user
 

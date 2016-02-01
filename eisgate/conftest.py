@@ -9,6 +9,7 @@ def pytest_configure():
             IDENTITY_BACKEND = 'http://accounts.ezeep.com/auth/signin/?next=%s',
 
             BASE_URL = 'http://service1.ezeep.com',
+            DEBUG = True,
 
             DATABASES = {
                 'default': {
@@ -35,5 +36,5 @@ def pytest_configure():
                 'eisgate.backends.EisgateBackend',
             ),
 
-            UUID_ATTR = 'id',
+            UUID_ATTR = 'username',
     )

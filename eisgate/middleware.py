@@ -1,4 +1,7 @@
+import logging
 from django.contrib.auth import authenticate
+
+logger = logging.getLogger(__name__)
 
 class EisgateMiddleware(object):
     """
