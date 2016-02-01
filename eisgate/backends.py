@@ -33,8 +33,9 @@ class EisgateBackend(object):
         user_uuid = eis_uuid.replace('-', '')
         try:
             #query = {uuid_attr: user_uuid}
-            query = {"username": user_uuid}
-            user = UserModel.objects.get(**query)
+            #query = {"username": user_uuid}
+            #user = UserModel.objects.get(**query)
+            user = UserModel.objects.get(username=user_uuid)
         except UserModel.DoesNotExist:
             #attrs = {uuid_attr: eis_uuid}
             #UserModel.objects.create(**attrs)
