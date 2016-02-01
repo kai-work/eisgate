@@ -30,14 +30,15 @@ class EisgateBackend(object):
 
         #We got a response with a uuid
         eis_uuid = data['sub']
-
+        user_uuid = eis_uuid.replace('-', '')
         try:
             query = {uuid_attr: eis_uuid}
             user = UserModel.objects.get(**query)
         except UserModel.DoesNotExist:
-            attrs = {uuid_attr: eis_uuid}
-            UserModel.objects.create(**attrs)
-            user = UserModel.objects.get(**attrs)
+            #attrs = {uuid_attr: eis_uuid}
+            #UserModel.objects.create(**attrs)
+            #user = UserModel.objects.get(**attrs)
+            user = UserModel(username=user_uuid[0:30])
             user.set_unusable_password()
             user.save() #TODO, we might need user.user.save() with backend
         return user
