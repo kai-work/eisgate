@@ -21,7 +21,7 @@ def read_that_file(path):
 long_description = '\n'.join((read_that_file('README.md'),
                               read_that_file('LICENSE.txt')))
 
-version = '0.0.1'
+version = '0.1.0'
 
 setup(name='eisgate',
       version=version,

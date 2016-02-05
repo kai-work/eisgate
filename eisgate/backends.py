@@ -18,7 +18,10 @@ class EisgateBackend(object):
         identity_url = getattr(settings, 'IDENTITY_URL', 'https://accounts.ezeep.com')
 
         validation_url = identity_url + '/auth/validate/'
-        headers = {'Authorization': 'Bearer ' + get_access_token_for_eis()}
+        access_token_eis = get_access_token_for_eis()
+        if not access_token_eis:
+            return None
+        headers = {'Authorization': 'Bearer ' +access_token_eis}
         payload = {'token': token}
         response = requests.post(validation_url, headers=headers, data=payload, verify=False)
         if response.status_code != requests.codes.ok:
@@ -51,9 +54,13 @@ def get_access_token_for_eis():
     backend_token_url = identity_url + '/oauth2/access_token/'
     backend_headers = {'Authorization': 'Basic ' + encoded_client_credentials}
     backend_payload = {'grant_type': 'client_credentials_b', 'scope': 'read+write'}
-    token_response = requests.post(backend_token_url, headers=backend_headers, data=backend_payload, verify=False)
-    if token_response.status_code == requests.codes.ok:
-        token_data = token_response.json()
-        if token_data is not None and token_data['access_token'] is not None:
-            return token_data['access_token']
-    return ''
+    try:
+        token_response = requests.post(backend_token_url, headers=backend_headers, data=backend_payload, verify=False)
+        if token_response.status_code == requests.codes.ok:
+            token_data = token_response.json()
+            if token_data is not None and token_data['access_token'] is not None:
+                return token_data['access_token']
+    except requests.exceptions.RequestException as ex:
+        logger.error(ex)
+        return None
+    return None
