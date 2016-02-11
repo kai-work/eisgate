@@ -55,7 +55,7 @@ def get_access_token_for_eis():
     backend_headers = {'Authorization': 'Basic ' + encoded_client_credentials}
     backend_payload = {'grant_type': 'client_credentials_b', 'scope': 'read+write'}
     try:
-        token_response = requests.post(backend_token_url, headers=backend_headers, data=backend_payload, verify=False)
+        token_response = requests.post(backend_token_url, headers=backend_headers, data=backend_payload, verify=False, timeout=1.0)
         if token_response.status_code == requests.codes.ok:
             token_data = token_response.json()
             if token_data is not None and token_data['access_token'] is not None:
