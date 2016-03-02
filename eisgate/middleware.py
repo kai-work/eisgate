@@ -15,4 +15,3 @@ class EisgateMiddleware(object):
                 user = authenticate(token=token[1])
                 if user:
                     request.user = request._cached_user = user
-                    login(request, user)

@@ -77,6 +77,9 @@ class EisgateBackend(object):
         pass
 
     def get_all_permissions(self, user, obj=None):
+        if not hasattr(user, 'eis_user'):
+            _EISUser(self, user=user)
+
         if hasattr(user, 'eis_user'):
             return user.eis_user.get_all_permissions()
         else:
