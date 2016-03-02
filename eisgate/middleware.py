@@ -1,5 +1,5 @@
 import logging
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 logger = logging.getLogger(__name__)
 
@@ -15,3 +15,4 @@ class EisgateMiddleware(object):
                 user = authenticate(token=token[1])
                 if user:
                     request.user = request._cached_user = user
+                    login(request, user)
