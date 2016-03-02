@@ -2,6 +2,9 @@ from django.conf import settings
 
 def pytest_configure():
     settings.configure(
+            AUTH_EIS_CLIENT_ID = 'test',
+            AUTH_EIS_CLIENT_SECRET = '1234',
+            AUTH_EIS_SERVER_URL = 'http://10.0.2.2:8081',
             EIS_CLIENT_ID = 'test',
             EIS_CLIENT_SECRET = '1234',
             IDENTITY_URL = 'http://10.0.2.2:8081',
