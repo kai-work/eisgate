@@ -4,7 +4,7 @@ def pytest_configure():
     settings.configure(
             EIS_CLIENT_ID = 'test',
             EIS_CLIENT_SECRET = '1234',
-            IDENTITY_URL = 'http://10.0.2.2:8081',
+            IDENTITY_URL = 'http://accounts.lcl.ezeep.com', #'http://10.0.2.2:8081',
             IDENTITY_SERVICE = 'tcp://10.8.0.74:4242',
             IDENTITY_BACKEND = 'http://accounts.ezeep.com/auth/signin/?next=%s',
 
