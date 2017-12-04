@@ -54,11 +54,14 @@ class Oauth2TokenProvider(object):
         return self._token
 
 
+identity_url = getattr(settings, 'IDENTITY_URL', 'https://accounts.ezeep.com')
+backend_token_url = identity_url + '/oauth2/access_token/'
+token_provider = Oauth2TokenProvider(url=backend_token_url)
+
+
 class EisgateBackend(object):
     def __init__(self):
-        identity_url = getattr(settings, 'IDENTITY_URL', 'https://accounts.ezeep.com')
-        backend_token_url = identity_url + '/oauth2/access_token/'
-        self.token_provider = Oauth2TokenProvider(url=backend_token_url)
+        self.token_provider = token_provider
 
     def authenticate(self, provider=None, token=None):
         # We need to verify the token against EIS and get a identifier
