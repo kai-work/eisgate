@@ -31,7 +31,7 @@ class OAuth2Token(object):
 
 
 class Oauth2TokenProvider(object):
-    def __init__(self, url='https://accounts.ezeep.com/oauth2/access_token/'):
+    def __init__(self, url='https://accounts.ezeep.com/oauth/access_token/'):
         self._token = None
         self.url = url
 
@@ -41,7 +41,7 @@ class Oauth2TokenProvider(object):
             backend_client_secret = getattr(settings, 'EIS_CLIENT_SECRET', '')
             encoded_client_credentials = base64.b64encode(backend_client_id + ':' + backend_client_secret)
             backend_headers = {'Authorization': 'Basic ' + encoded_client_credentials}
-            backend_payload = {'grant_type': 'client_credentials_b', 'scope': 'read+write'}
+            backend_payload = {'grant_type': 'client_credentials', 'scope': 'internal:read'}
 
             try:
                 token_response = requests.post(self.url, headers=backend_headers, data=backend_payload,
