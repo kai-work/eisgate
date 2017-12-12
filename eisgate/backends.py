@@ -55,7 +55,7 @@ class Oauth2TokenProvider(object):
 
 
 identity_url = getattr(settings, 'IDENTITY_URL', 'https://accounts.ezeep.com')
-backend_token_url = identity_url + '/oauth2/access_token/'
+backend_token_url = identity_url + '/oauth/access_token/'
 token_provider = Oauth2TokenProvider(url=backend_token_url)
 
 
